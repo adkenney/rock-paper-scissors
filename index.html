@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<body>
+  <div>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+  </div>
+  <div id="container">
+    <div id="result"></div>
+    <div id="player-score">Player Score: </div>
+    <div id="computer-score">Computer Score: </div>
+  </div>
+  <script type="text/javascript">
+  var playerScore = 0;
+var computerScore = 0;
+const result = document.getElementById("result");
+const playerScoreContainer = document.getElementById("player-score");
+const computerScoreContainer = document.getElementById("computer-score");
+
+function computerPlay() {
+  const choices = ["rock", "paper", "scissors"];
+  let pick = choices[Math.floor(Math.random() * choices.length)];
+  return pick;
+}
+
+function playRound(playerSelection, computerSelection) {
+  let player = playerSelection.toLowerCase();
+
+  if (player == computerSelection) {
+    return "Draw!";
+  } else if (player == "rock" && computerSelection == "scissors") {
+    playerScore += 1;
+    return `You Win! ${player} beats ${computerSelection}`;
+  } else if (player == "paper" && computerSelection == "rock") {
+    playerScore += 1;
+    return `You Win! ${player} beats ${computerSelection}`;
+  } else if (player == "scissors" && computerSelection == "paper") {
+    playerScore += 1;
+    return `You Win! ${player} beats ${computerSelection}`;
+  } else {
+    computerScore += 1;
+    return `You Lose! ${computerSelection} beats ${player}`;
+  }
+}
+
+function getWinner() {
+  if (playerScore == 5) {
+    alert("You Win The Round");
+    playerScore = 0;
+    computerScore = 0;
+    result.innerHTML = "";
+    playerScoreContainer.textContent = "";
+    computerScoreContainer.textContent = "";
+  }
+
+  if (computerScore == 5) {
+    alert("You Lose The Round");
+    computerScore = 0;
+    playerScore = 0;
+    result.innerHTML = "";
+    playerScoreContainer.textContent = "";
+    computerScoreContainer.textContent = "";
+  }
+}
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => {
+  button.addEventListener("click", e => {
+    result.innerHTML = playRound(button.id, computerPlay());
+    playerScoreContainer.textContent = `Player Score: ${playerScore}`;
+    computerScoreContainer.textContent = `Computer Score: ${computerScore}`;
+    getWinner();
+  });
+});
+
+  </script>
+  </body>
+</html>
